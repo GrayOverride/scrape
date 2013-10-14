@@ -16,7 +16,7 @@ var nodeio = require('node.io');
   function memcheck() {
     var mem = util.inspect(process.memoryUsage());
     var hmem = process.memoryUsage();
-    console.log('currently using:' +"\nRss: "+ hmem.rss/1000000 +"Mb\nHeapTotal: "+ hmem.heapTotal/1000000 +"Mb\nHeapUsed: "+ hmem.heapUsed/1000000 +"Mb" );
+    console.log('currently using:' +"\nRss: "+ hmem.rss/1000000 +"Mb\nHeapTotallol: "+ hmem.heapTotal/1000000 +"Mb\nHeapUsed: "+ hmem.heapUsed/1000000 +"Mb" );
     
   }
 
