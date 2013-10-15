@@ -1,4 +1,5 @@
 result = {};
-target = $('div.board').find('div.post').children().text();
+target = $('div.main_center').find('table.stats').children().text();
+
 result.target = target
 
