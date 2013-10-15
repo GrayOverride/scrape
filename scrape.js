@@ -11,13 +11,23 @@ var nodeio = require('node.io');
       else if (text === 'mem\n') {
       memcheck();
     }
+    else if (text === 'scrape\n'){
+      newurl();
+    }
+    else if (text === 'help\n'){
+      console.log('commands:\n\nscrape: start the scape\nmem: check alocated system resourses\nquit: terminate the process')
+    }
 
   });
   function memcheck() {
     var mem = util.inspect(process.memoryUsage());
     var hmem = process.memoryUsage();
-    console.log('currently using:' +"\nRss: "+ hmem.rss/1000000 +"Mb\nHeapTotallol: "+ hmem.heapTotal/1000000 +"Mb\nHeapUsed: "+ hmem.heapUsed/1000000 +"Mb" );
+    console.log('currently using:' +"\nRss: "+ hmem.rss/1000000 +"Mb\nHeapTotal: "+ hmem.heapTotal/1000000 +"Mb\nHeapUsed: "+ hmem.heapUsed/1000000 +"Mb" );
     
+  }
+  function newurl(){
+    console.log("starting scrape sir");
+    scrape();
   }
 
   function done() {
@@ -28,12 +38,15 @@ var nodeio = require('node.io');
 var methods = {
     input: true,
     timeout: 1000,
+}
 
 
 
-    run: function() {
+    function scrape(){
+
         this.getHtml('http://boards.4chan.org/v/', function(err, $) {
 
+              //Outputs lines to a file
             //Handle any request / parsing errors
             if (err) this.exit(err);
 
@@ -54,7 +67,8 @@ var methods = {
             }
 
             this.emit(output);
+            this.write('scrapeOutput', data); 
         });
     }
-}
+//}
 exports.job = new nodeio.Job({timeout:10}, methods);
