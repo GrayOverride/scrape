@@ -41,7 +41,7 @@
     process.exit();
   }
 function scrape(){
-var companies = ['/v/', '/a/'];
+var suburl = ['/v/', '/a/'];
 
 // create a web scraper agent instance
 var agent = wscraper.createAgent();
@@ -69,5 +69,5 @@ agent.on('abort', function (e) {
 });
 
 // run the web scraper agent
-agent.start('boards.4chan.org', companies, script);
+agent.start('boards.4chan.org', suburl, script);
 }
