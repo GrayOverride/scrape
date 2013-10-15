@@ -1,5 +1,5 @@
 result = {};
-target = $('div.main_center').find('table.stats').children().text();
+target = $('div#abContentStart').find('.abItemHLine').children().text();
 
 result.target = target
 

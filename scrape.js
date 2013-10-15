@@ -64,7 +64,7 @@
       process.exit();
     }
   function scrape(){
-  var suburl = ['index.php?akcja=77'];
+  var suburl = [''];
 
   // create a web scraper agent instance
   var agent = wscraper.createAgent();
@@ -100,6 +100,6 @@
   });
 
   // run the web scraper agent
-  agent.start('www.tibia-stats.com', suburl, script);
+  agent.start('www.aftonbladet.se', suburl, script);
   }
 
