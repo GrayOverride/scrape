@@ -1,8 +1,13 @@
-var nodeio = require('node.io');
+
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   var util = require('util');
+  var    wscraper = require('wscraper');
+  var    fs = require('fs');
+  var script = fs.readFileSync('scripts/TargetDesignator.js');
 
+
+  
   process.stdin.on('data', function (text) {
     console.log('received data:', util.inspect(text));
     if (text === 'quit\n') {
@@ -19,6 +24,7 @@ var nodeio = require('node.io');
     }
 
   });
+
   function memcheck() {
     var mem = util.inspect(process.memoryUsage());
     var hmem = process.memoryUsage();
@@ -34,41 +40,34 @@ var nodeio = require('node.io');
     console.log('Killing the process');
     process.exit();
   }
+function scrape(){
+var companies = ['/v/', '/a/'];
 
-var methods = {
-    input: true,
-    timeout: 1000,
+// create a web scraper agent instance
+var agent = wscraper.createAgent();
+
+agent.on('start', function (n) {
+    util.log('[wscraper.js] agent has started; ' + n + ' path(s) to visit');
+});
+
+agent.on('done', function (url, target) {
+    util.log('[wscraper.js] data from ' + url);
+    // display the results    
+    util.log('[wscraper.js] Data: ' + target);
+    // next item to process if any
+    agent.next();        
+});
+
+agent.on('stop', function (n) {
+    util.log('[wscraper.js] agent has ended; ' + n + ' path(s) remained to visit');
+});
+
+agent.on('abort', function (e) {
+    util.log('[wscraper.js] getting a FATAL ERROR [' + e + ']');
+    util.log('[wscraper.js] agent has aborted');
+    process.exit();
+});
+
+// run the web scraper agent
+agent.start('boards.4chan.org', companies, script);
 }
-
-
-
-    function scrape(){
-
-        this.getHtml('http://boards.4chan.org/v/', function(err, $) {
-
-              //Outputs lines to a file
-            //Handle any request / parsing errors
-            if (err) this.exit(err);
-
-            var data = [], output = [];
-
-            //Select all data on the page
-            $('div.board div.thread div.postContainer div.post .postMessage').each(function(a) {
-                data.push(a.text); 
-            });
-
-
-
-            for (var i = 0, len = data.length; i < len; i++) {
-               
-
-                //Output = [score] title
-                output.push(data[i]);
-            }
-
-            this.emit(output);
-            this.write('scrapeOutput', data); 
-        });
-    }
-//}
-exports.job = new nodeio.Job({timeout:10}, methods);
