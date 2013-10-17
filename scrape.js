@@ -1,16 +1,51 @@
 
-    process.stdin.resume();
-    process.stdin.setEncoding('utf8');
-    var validator = require('validator');
-    var util = require('util');
-    var colors = require('colors');
-    var fs = require('fs');
-    var wscraper = require('wscraper');
-    var script = fs.readFileSync('scripts/TargetDesignator.js');
+/**
+ * Module dependencies.
+ */
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+var validator = require('validator');
+var util = require('util');
+var colors = require('colors');
+var fs = require('fs');
+var wscraper = require('wscraper');
+var script = fs.readFileSync('scripts/TargetDesignator.js');
 
+var express = require('express');
+var routes = require('./routes');
+var user = require('./routes/user');
+var http = require('http');
+var path = require('path');
 
-    
-    process.stdin.on('data', function (text) {
+var scrape = express();
+
+// all environments
+scrape.set('port', process.env.PORT || 3000);
+scrape.set('views', path.join(__dirname, 'views'));
+scrape.set('view engine', 'ejs');
+scrape.use(express.favicon());
+scrape.use(express.logger('dev'));
+scrape.use(express.bodyParser());
+scrape.use(express.methodOverride());
+scrape.use(express.cookieParser('your secret here'));
+scrape.use(express.session());
+scrape.use(scrape.router);
+scrape.use(require('stylus').middleware(path.join(__dirname, 'public')));
+scrape.use(express.static(path.join(__dirname, 'public')));
+
+// development only
+if ('development' == scrape.get('env')) {
+  scrape.use(express.errorHandler());
+}
+
+scrape.get('/', routes.index);
+scrape.get('/users', user.list);
+
+http.createServer(scrape).listen(scrape.get('port'), function(){
+  console.log('Express server listening on port '.green + scrape.get('port'));
+});
+
+	process.stdin.on('data', function (text) {
       console.log('received data:', util.inspect(text));
       if (text === 'quit\n') {
         done();
