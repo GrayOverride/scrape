@@ -1,0 +1,13 @@
+{
+  "name": "scrape",
+  "description": "a light scraper",
+  "version": "0.0.1",
+  "private": true,
+
+  "dependencies": {
+    "colors"   :  "*",
+    "express"  :  "3.4.1",
+    "validator":  "1.5.1",
+    "wscraper" :  "0.1.0"
+  }
+}

@@ -41,7 +41,7 @@
     function memcheck() {
       var mem = util.inspect(process.memoryUsage());
       var hmem = process.memoryUsage();
-      console.log('currently using:'.green +"\nRss: ".underline.green + hmem.rss/1000000 +"Mb\nHeapTotal: ".underline.green+ hmem.heapTotal/1000000 +"Mb\nHeapUsed: ".underline.green+ hmem.heapUsed/1000000 +"Mb".underline.green );
+      console.log('currently using:'.green +"\nRss:".underline.green + hmem.rss/1000000 +"Mb\nHeapTotal:".underline.green+ hmem.heapTotal/1000000 +"Mb\nHeapUsed:".underline.green+ hmem.heapUsed/1000000 +"Mb".underline.green );
       
     }
     function singleS(){
@@ -64,7 +64,7 @@
       process.exit();
     }
   function scrape(){
-  var suburl = [''];
+  var suburl = ['/r/aww'];
 
   // create a web scraper agent instance
   var agent = wscraper.createAgent();
@@ -77,7 +77,7 @@
       util.log('data from ' + url);
       // display the results 
       //util.log('Data: ' + JSON.stringify(target)); 
-      fs.writeFile("output/targetOutput", JSON.stringify(target), function(err) {
+      fs.writeFile("targetOutput", JSON.stringify(target), function(err) {
       if(err) {
           console.log(err);
       } else {
@@ -100,6 +100,6 @@
   });
 
   // run the web scraper agent
-  agent.start('www.aftonbladet.se', suburl, script);
+  agent.start('www.imgur.com', suburl, script);
   }
 

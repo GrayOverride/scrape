@@ -1,5 +1,5 @@
 result = {};
-target = $('div#abContentStart').find('.abItemHLine').children().text();
+target = $('div#imagelist').find('div.posts').children().text();
 
 result.target = target
 
