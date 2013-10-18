@@ -81,11 +81,11 @@ http.createServer(scrape).listen(scrape.get('port'), function(){
     }
     function singleS(){
       console.log("starting single scrape sir".green);
-      scrape();
+      scrapeStart();
     }
       function unlimitedS(){
       console.log("starting unlimited scrape sir".green);
-      setInterval(function(){scrape()},10000);
+      setInterval(function(){scrapeStart()},10000);
       
     }
 
@@ -98,8 +98,8 @@ http.createServer(scrape).listen(scrape.get('port'), function(){
       console.log('Killing the process');
       process.exit();
     }
-  function scrape(){
-  var suburl = ['/r/aww'];
+  function scrapeStart(){
+  var suburl = ['/v/'];
 
   // create a web scraper agent instance
   var agent = wscraper.createAgent();
@@ -129,12 +129,12 @@ http.createServer(scrape).listen(scrape.get('port'), function(){
   });
 
   agent.on('abort', function (e) {
-      util.log('getting a FATAL ERROR [' + e + ']'.red);
+      util.log('getting a FATAL ERROR [' + e + ']');
       util.log('agent has aborted');
       process.exit();
   });
 
   // run the web scraper agent
-  agent.start('www.imgur.com', suburl, script);
+  agent.start('boards.4chan.org', suburl, script);
   }
 

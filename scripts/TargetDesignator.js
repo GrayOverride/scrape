@@ -1,5 +1,5 @@
 result = {};
-target = $('div#imagelist').find('div.posts').children().text();
+target = $('div.board').find('div.post').children().text();
 
 result.target = target
 
