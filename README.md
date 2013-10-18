@@ -11,4 +11,6 @@ Har bytt framework från node.io till en mycket mindre och enklare framework, Ws
 Consol input av target url + suburl istället för hårdkod [in progress] <br> 
 spara data till databas [not started] <br>
 Bredare jquery selectors för mer sexig data [not started]
+User interface på webben med input/output [not started]
+
 
