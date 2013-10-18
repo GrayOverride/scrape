@@ -10,7 +10,7 @@ Har bytt framework från node.io till en mycket mindre och enklare framework, Ws
 <h2>ToDo</h2>
 Consol input av target url + suburl istället för hårdkod [in progress] <br> 
 spara data till databas [not started] <br>
-Bredare jquery selectors för mer sexig data [not started]
+Bredare jquery selectors för mer sexig data [not started]<br>
 User interface på webben med input/output [not started]
 
 
