@@ -10,41 +10,13 @@ var colors = require('colors');
 var fs = require('fs');
 var wscraper = require('wscraper');
 var script = fs.readFileSync('scripts/TargetDesignator.js');
-
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
 
-var scrape = express();
 
-// all environments
-scrape.set('port', process.env.PORT || 3000);
-scrape.set('views', path.join(__dirname, 'views'));
-scrape.set('view engine', 'ejs');
-scrape.use(express.favicon());
-scrape.use(express.logger('dev'));
-scrape.use(express.bodyParser());
-scrape.use(express.methodOverride());
-scrape.use(express.cookieParser('your secret here'));
-scrape.use(express.session());
-scrape.use(scrape.router);
-scrape.use(require('stylus').middleware(path.join(__dirname, 'public')));
-scrape.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == scrape.get('env')) {
-  scrape.use(express.errorHandler());
-}
 
-scrape.get('/', routes.index);
-scrape.get('/users', user.list);
 
-http.createServer(scrape).listen(scrape.get('port'), function(){
-  console.log('Express server listening on port '.green + scrape.get('port'));
-});
-
+//cli user interface
 	process.stdin.on('data', function (text) {
       console.log('received data:', util.inspect(text));
       if (text === 'quit\n') {
@@ -65,13 +37,14 @@ http.createServer(scrape).listen(scrape.get('port'), function(){
         unlimitedS();
       }
       else if (text === 'help\n'){
-        console.log('commands:\n\nss: start the scape and run it once\nus: run the scrape until you terminate it(use with care)\nmem: check alocated system resourses\nquit: terminate the process')
+        console.log('commands:\n\nss: start the scape and run it once\nus: run the app until you terminate it(use with care)\nmem: check alocated system resourses\nquit: terminate the process')
       }
       else if (text === 'stop\n'){
         stop();
       }
 
     });
+
 
     function memcheck() {
       var mem = util.inspect(process.memoryUsage());
@@ -84,7 +57,7 @@ http.createServer(scrape).listen(scrape.get('port'), function(){
       scrapeStart();
     }
       function unlimitedS(){
-      console.log("starting unlimited scrape sir".green);
+      console.log("starting unlimited app sir".green);
       setInterval(function(){scrapeStart()},10000);
       
     }
@@ -101,7 +74,7 @@ http.createServer(scrape).listen(scrape.get('port'), function(){
   function scrapeStart(){
   var suburl = ['/v/'];
 
-  // create a web scraper agent instance
+  // create a web appr agent instance
   var agent = wscraper.createAgent();
 
   agent.on('start', function (n) {
@@ -138,3 +111,23 @@ http.createServer(scrape).listen(scrape.get('port'), function(){
   agent.start('boards.4chan.org', suburl, script);
   }
 
+var app = require('express')()
+  , server = require('http').createServer(app)
+  , io = require('socket.io').listen(server);
+
+server.listen(4000);
+
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/public/index.html');
+});
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  socket.emit('sr', {scrape: 'JSON.stringify(target' });
+  socket.on('srespons', function (sdata) {
+    console.log(sdata);
+  })
+  });
+});
