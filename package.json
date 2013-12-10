@@ -8,12 +8,6 @@
 },
 
   "dependencies": {
-    "colors"   :  "*",
-    "express"  :  "*",
-    "validator":  "1.5.1",
-    "wscraper" :  "0.1.0",
-    "ejs"      :  "*",
-    "stylus"   :  "*",
-    "socket.io":  "*"
+    
   }
 }
