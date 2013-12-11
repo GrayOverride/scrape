@@ -1,6 +1,8 @@
 scrape
 ======
 
+<b>jobbar på V2 </b>
+
 enkelt scrape som antagligen inte fungerar för någon annan :P<br>
 
 Har bytt framework från node.io till en mycket mindre och enklare framework, Wscraper (sås: https://npmjs.org/package/wscraper)<br>
